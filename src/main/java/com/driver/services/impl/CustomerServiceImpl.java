@@ -30,30 +30,61 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public void register(Customer customer) {
 		//Save the customer in database
+		customerRepository2.save(customer);
 	}
 
 	@Override
 	public void deleteCustomer(Integer customerId) {
 		// Delete customer without using deleteById function
-
+		customerRepository2.deleteById(customerId);
 	}
 
 	@Override
 	public TripBooking bookTrip(int customerId, String fromLocation, String toLocation, int distanceInKm) throws Exception{
 		//Book the driver with lowest driverId who is free (cab available variable is Boolean.TRUE). If no driver is available, throw "No cab available!" exception
 		//Avoid using SQL query
+		TripBooking tripBooking = new TripBooking();
+		tripBooking.setFromLocation(fromLocation);
+		tripBooking.setToLocation(toLocation);
+		tripBooking.setDistanceInKm(distanceInKm);
+		tripBooking.setTripStatus(TripStatus.CONFIRMED);
 
+
+		Customer customer = customerRepository2.findById(customerId).get();
+		List<TripBooking> tripBookingList = customer.getTripBookingList();
+
+		tripBookingList.add(tripBooking);
+		customerRepository2.save(customer);
+		return tripBooking;
 	}
 
 	@Override
 	public void cancelTrip(Integer tripId){
 		//Cancel the trip having given trip Id and update TripBooking attributes accordingly
 
+		List<Customer> customerList = customerRepository2.findAll();
+
+		for (Customer customer : customerList){
+			if (customer.getTripBookingList().contains(tripId)){
+				TripBooking tripBooking = customer.getTripBookingList().get(tripId);
+				tripBooking.setTripStatus(TripStatus.CANCELED);
+				customerRepository2.save(customer);
+			}
+		}
+//		TripBooking tripBooking = tripBookingRepository2.findById(tripId).get();
 	}
 
 	@Override
 	public void completeTrip(Integer tripId){
 		//Complete the trip having given trip Id and update TripBooking attributes accordingly
+		List<Customer> customerList = customerRepository2.findAll();
 
+		for (Customer customer : customerList){
+			if (customer.getTripBookingList().contains(tripId)){
+				TripBooking tripBooking = customer.getTripBookingList().get(tripId);
+				tripBooking.setTripStatus(TripStatus.COMPLETED);
+				customerRepository2.save(customer);
+			}
+		}
 	}
 }
