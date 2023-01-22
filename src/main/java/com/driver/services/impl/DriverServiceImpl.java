@@ -47,7 +47,7 @@ public class DriverServiceImpl implements DriverService {
 
 		Cab cab = driver.getCab();
 
-		if(cab.isAvailable() == false)
+		if(cab.getAvailable() == false)
 			cab.setAvailable(true);
 		else
 			cab.setAvailable(false);
