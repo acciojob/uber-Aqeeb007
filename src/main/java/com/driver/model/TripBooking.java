@@ -35,6 +35,22 @@ public class TripBooking {
         this.bill = bill;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
     public int getTripBookingId() {
         return TripBookingId;
     }
@@ -67,11 +83,11 @@ public class TripBooking {
         this.distanceInKm = distanceInKm;
     }
 
-    public TripStatus getTripStatus() {
+    public TripStatus getStatus() {
         return tripStatus;
     }
 
-    public void setTripStatus(TripStatus tripStatus) {
+    public void setStatus(TripStatus tripStatus) {
         this.tripStatus = tripStatus;
     }
 
