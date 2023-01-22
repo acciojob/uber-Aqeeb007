@@ -36,7 +36,7 @@ public class DriverServiceImpl implements DriverService {
 		Driver driver = driverRepository3.findById(driverId).get();
 		int cabId = driver.getCab().getId();
 		cabRepository3.deleteById(cabId);
-		driverRepository3.deleteById(driverId);
+		driverRepository3.delete(driver);
 
 	}
 
