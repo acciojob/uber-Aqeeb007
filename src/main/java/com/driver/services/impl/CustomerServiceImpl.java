@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 		tripBooking.setFromLocation(fromLocation);
 		tripBooking.setToLocation(toLocation);
 		tripBooking.setDistanceInKm(distanceInKm);
-		tripBooking.setTripStatus(TripStatus.CONFIRMED);
+		tripBooking.setStatus(TripStatus.CONFIRMED);
 
 
 		Customer customer = customerRepository2.findById(customerId).get();
@@ -67,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
 		for (Customer customer : customerList){
 			if (customer.getTripBookingList().contains(tripId)){
 				TripBooking tripBooking = customer.getTripBookingList().get(tripId);
-				tripBooking.setTripStatus(TripStatus.CANCELED);
+				tripBooking.setStatus(TripStatus.CANCELED);
 				customerRepository2.save(customer);
 			}
 		}
@@ -82,7 +82,7 @@ public class CustomerServiceImpl implements CustomerService {
 		for (Customer customer : customerList){
 			if (customer.getTripBookingList().contains(tripId)){
 				TripBooking tripBooking = customer.getTripBookingList().get(tripId);
-				tripBooking.setTripStatus(TripStatus.COMPLETED);
+				tripBooking.setStatus(TripStatus.COMPLETED);
 				customerRepository2.save(customer);
 			}
 		}
