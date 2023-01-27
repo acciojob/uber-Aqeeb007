@@ -22,11 +22,13 @@ public class DriverServiceImpl implements DriverService {
 	public void register(String mobile, String password){
 		//Save a driver in the database having given details and a cab with ratePerKm as 10 and availability as True by default.
 		Driver driver = new Driver();
+		Cab cab = new Cab(10,false);
 
 		driver.setMobile(mobile);
 		driver.setPassword(password);
-		driver.setCab(new Cab(10,true));
+		driver.setCab(cab);
 
+		cabRepository3.save(cab);
 		driverRepository3.save(driver);
 	}
 
@@ -34,8 +36,14 @@ public class DriverServiceImpl implements DriverService {
 	public void removeDriver(int driverId){
 		// Delete driver without using deleteById function
 		Driver driver = driverRepository3.findById(driverId).get();
-		int cabId = driver.getCab().getId();
-		cabRepository3.deleteById(cabId);
+
+		for(Cab cab : cabRepository3.findAll()) {
+			if (cab.getDriver() == driver) {
+				int cabId = driver.getCab().getId();
+				cabRepository3.deleteById(cabId);
+			}
+		}
+
 		driverRepository3.delete(driver);
 
 	}
@@ -51,5 +59,8 @@ public class DriverServiceImpl implements DriverService {
 			cab.setAvailable(true);
 		else
 			cab.setAvailable(false);
+
+		cabRepository3.save(cab);
+		driverRepository3.save(driver);
 	}
 }
