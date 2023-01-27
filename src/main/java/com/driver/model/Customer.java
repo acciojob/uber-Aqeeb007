@@ -21,11 +21,11 @@ public class Customer {
         this.password = password;
     }
 
-    public List<TripBooking> getTripBookingList() {
+    public List<TripBooking> getTripBooking() {
         return tripBookingList;
     }
 
-    public void setTripBookingList(List<TripBooking> tripBookingList) {
+    public void setTripBooking(List<TripBooking> tripBookingList) {
         this.tripBookingList = tripBookingList;
     }
 
